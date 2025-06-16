@@ -1,9 +1,15 @@
-﻿using DesignPatterns.Creational.Builder._01;
+﻿using DesignPatterns.Creational.AbstractFactory._01.Factories;
+using DesignPatterns.Creational.AbstractFactory._01.Products;
+using DesignPatterns.Creational.AbstractFactory._02.CaveLevel;
+using DesignPatterns.Creational.AbstractFactory._02.Common;
+using DesignPatterns.Creational.AbstractFactory._02.HauntedHouseLevel;
+using DesignPatterns.Creational.Builder._01;
 using DesignPatterns.Creational.Builder._03;
 using DesignPatterns.Creational.Singleton._01;
 
 //Runner.RunSingletions();
-Runner.RunBuilders();
+//Runner.RunBuilders();
+Runner.RunAbstractFactories();
 
 Console.WriteLine("\nDone!");
 
@@ -45,6 +51,7 @@ static class Runner
         RunSimpleBuilder();
         RunFluentBuilder();
         RunFluentBuilderWithChaining();
+        RunStepBuilder();
 
         void RunSimpleBuilder()
         {
@@ -97,6 +104,38 @@ static class Runner
                 .AddTopping("Onions")
                 .Build();
             Console.WriteLine($"Pizza with {product.Dough.Flour} dough, {product.Sauce} sauce, {product.Cheese} cheese and toppings: {string.Join(", ", product.Toppings)}");
+        }
+    }
+
+    public static void RunAbstractFactories()
+    {
+        RunSimpleAbstractFactory();
+        RunRealExampleAbstractFactory();
+
+        void RunSimpleAbstractFactory()
+        {
+            // Using the abstract factory pattern
+            AbstractFactory abstractFactory = new ConcreteFactory();
+
+            Product1 product1 = abstractFactory.CreateProduct1();
+            Product2 product2 = abstractFactory.CreateProduct2();
+
+            // Not using the abstract factory pattern
+            ConcreteProduct1 concreteProduct1 = new();
+            ConcreteProduct2 concreteProduct2 = new();
+        }
+
+        void RunRealExampleAbstractFactory()
+        {
+            SetupEnvironment(new CaveLevelElementFactory());
+            SetupEnvironment(new HauntedHouseLevelElementFactory());
+
+            void SetupEnvironment(ILevelElementFactory levelFactory)
+            {
+                IEnemy enemy = levelFactory.CreateEnemy();
+                IWeapon weapon = levelFactory.CreateWeapon();
+                IPowerUp powerUp = levelFactory.CreatePowerUp();
+            }            
         }
     }
 }
