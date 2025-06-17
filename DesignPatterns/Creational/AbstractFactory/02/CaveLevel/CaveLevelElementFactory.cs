@@ -1,4 +1,3 @@
-using _3._2.CaveLevel;
 using DesignPatterns.Creational.AbstractFactory._02.Common;
 
 namespace DesignPatterns.Creational.AbstractFactory._02.CaveLevel;

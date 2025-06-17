@@ -5,11 +5,15 @@ using DesignPatterns.Creational.AbstractFactory._02.Common;
 using DesignPatterns.Creational.AbstractFactory._02.HauntedHouseLevel;
 using DesignPatterns.Creational.Builder._01;
 using DesignPatterns.Creational.Builder._03;
+using DesignPatterns.Creational.FactoryMethod._01;
+using DesignPatterns.Creational.FactoryMethod._02.Levels;
+using DesignPatterns.Creational.FactoryMethod._03;
 using DesignPatterns.Creational.Singleton._01;
 
 //Runner.RunSingletions();
 //Runner.RunBuilders();
-Runner.RunAbstractFactories();
+//Runner.RunAbstractFactories();
+Runner.RunFabricMethods();
 
 Console.WriteLine("\nDone!");
 
@@ -136,6 +140,37 @@ static class Runner
                 IWeapon weapon = levelFactory.CreateWeapon();
                 IPowerUp powerUp = levelFactory.CreatePowerUp();
             }            
+        }
+    }
+
+    public static void RunFabricMethods()
+    {
+        RunSimpleFactoryMethod();
+        RunRealExampleFactoryMethod();
+        RunDocumentCreatorExample();
+
+        void RunSimpleFactoryMethod()
+        {
+            Password password = PasswordFactory.Generate();
+            IPassword password2 = PasswordFactory2.Generate(length: 4);
+        }
+
+        void RunRealExampleFactoryMethod()
+        {
+            Level level1 = LevelFactory.CreateLevel(levelNumber: 1);
+            level1.EncounterEnemy();
+
+            Level level2 = new HauntedHouseLevel();
+            level2.EncounterEnemy();
+        }
+
+        void RunDocumentCreatorExample()
+        {
+            DocumentCreator creator = new PDFDocumentCreator();
+            creator.OpenDocument(); // Creates and opens a PDF document
+
+            creator = new WordDocumentCreator();
+            creator.OpenDocument(); // Creates and opens a Word document
         }
     }
 }
