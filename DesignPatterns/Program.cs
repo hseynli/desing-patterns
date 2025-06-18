@@ -8,12 +8,17 @@ using DesignPatterns.Creational.Builder._03;
 using DesignPatterns.Creational.FactoryMethod._01;
 using DesignPatterns.Creational.FactoryMethod._02.Levels;
 using DesignPatterns.Creational.FactoryMethod._03;
+using DesignPatterns.Creational.Prototype._01;
+using DesignPatterns.Creational.Prototype._02;
+using DesignPatterns.Creational.Prototype._03;
 using DesignPatterns.Creational.Singleton._01;
+using Dumpify;
 
 //Runner.RunSingletions();
 //Runner.RunBuilders();
 //Runner.RunAbstractFactories();
-Runner.RunFabricMethods();
+//Runner.RunFabricMethods();
+Runner.RunPrototypes();
 
 Console.WriteLine("\nDone!");
 
@@ -171,6 +176,48 @@ static class Runner
 
             creator = new WordDocumentCreator();
             creator.OpenDocument(); // Creates and opens a Word document
+        }
+    }
+
+    public static void RunPrototypes()
+    {
+        RunSimplePrototype();
+        RunOriginalPrototype();
+        RunFigmaExample();
+
+        void RunSimplePrototype()
+        {
+            Person person = new Person("Farid", ["Fold Laundry"]);
+
+            Person shallowCopy = person.ShallowClone();
+            Person deepCopy = person.DeepClone();
+
+            shallowCopy.Hobbies.Add("Mop floors");
+            deepCopy.Hobbies.Add("Clean fridge");
+
+            person.Dump();
+        }
+
+        void RunOriginalPrototype()
+        {
+            // IPrototype prototype = new ConcretePrototype1();
+            IPrototype prototype = new ConcretePrototype2();
+
+            var prototypeClone = prototype.Clone();
+        }
+
+        void RunFigmaExample()
+        {
+            // canvas
+            var rectangle = new Rectangle(width: 100, height: 100, Color.LightGray);
+
+            CopyDrag(rectangle);
+            CopyDrag(new Circle(radius: 50, Color.LightGray));
+
+            void CopyDrag(IShape shape)
+            {
+                IShape newShape = shape.Clone();
+            }
         }
     }
 }
